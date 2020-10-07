@@ -1,22 +1,15 @@
 # Hangman Challenge
 
-You will be building the classic hangman game in Python. In hangman, a secret word is chosen and the user tries to guess each letter. Each correct guess reveals all instances of that letter. Each incorrect guess draws another body part on the poor guy getting hanged. The user wins if they reveal the entire word. They lose if the whole person is drawn on the noose.
+This is the classic hangman game built in Python. In hangman, a secret word is chosen and the user tries to guess each letter. Each correct guess reveals all instances of that letter. Each incorrect guess draws another body part on the poor guy getting hanged. The user wins if they reveal the entire word. They lose if the whole person is drawn on the noose.
 
 ## Functionality
 
-* Store a list (or tuple) of 5 to 10 words in your script.
+* Store a list (or tuple) of 5 to 10 words in the script.
 * Randomly choose a word from this list as the secret word.
 * Display the unrevealed word as underscores (with the same length.)
 * Prompt the user to enter a letter.
 * If the letter is in the word, mark it as revealed and visually display that letter in the word.
 * If the letter is incorrect, draw another part onto the stick person.
-
-### Hints
-
-* Your game will need some state to keep track of the word, how many letters are yet to be guessed, and the current state of the hangman.
-* You can initially represent the hangman as a decreasing number of guesses remaining.
-* You can use the `in` keyword to test to see if a letter is in the secret word.
-* Remember to account for case differences.
 
 ### Pseudocode
 
@@ -31,35 +24,9 @@ You will be building the classic hangman game in Python. In hangman, a secret wo
 9. If correct, add the letter to the guessed list, redraw the secret word with the new letter(s) showing.
 10. Loop back up to step 6 and continue until the word is fully revealed or guesses are used up.
 
-### How to draw that secret word?
+### Drawing hangman
 
-Being able to render a word as some underscores and some letters will be a little bit of a challenge. What I would recommend is the following:
-
-1. Make one variable to hold the secret word.
-2. Make one variable to hold every letter that the user guesses.
-3. Make one variable to hold the word as it is displayed.
-4. To decide if you should render a blank underscore or render a correct letter, you can iterate over the secret word checking to see if each letter is in the guessed letter list. If it is, use the actual letter character. If it is not, use an underscore to represent a letter not yet guessed.
-
-## BONUS
-
-Sometimes a user might have solved the answer without guessing every single letter. As a bonus implement a way for the user to guess the whole phrase instead of just one letter. Preferably, this should be case insensitive!
-
-
-## Notes on drawing your hangman
-
-* You decide how many body parts the person gets before completion.
-* You can display any kind of hangman that you want. Initially, you should just use a decrementing number. But if you feel like drawing a little person, you might try something that starts like this:
-
-```
--
-```
-
-...and adds body parts until it looks like this:
-```
--o-|-<
-```
-
-Or you could go all out and use Python's multi-line strings to make some breathtaking ASCII art:
+I store the drawing line by line in an array and print it out from bottom to top, so taht users can have up to 7 wrong guesses:
 
 ```
  ____
@@ -69,4 +36,161 @@ Or you could go all out and use Python's multi-line strings to make some breatht
 |    /\
 |
 -
+```
+
+## Game Start
+
+```
+~~~~~~~~~~~~~~Hangman Game~~~~~~~~~~~~~~
+Guess the word or the man will be HANGED
+You can have up to 7 wrong guesses
+
+Hint: This word has 4 letters  _ _ _ _
+
+Guess: 
+```
+
+Users can guess one letter each time, if they enter multiple letters they will get warming and enter again
+
+```
+Guess: ds
+One Letter At A Time!
+
+Guess: 
+```
+
+## Game Status
+
+As the game goes, users can see the hangman drawing step by step if they guess wrong, and letter reveals if they guess correct 
+
+```
+Guess: g
+Wrong Guess❌
+👀 Current Guesses: _ _ _ _
+😿 Hangman Status:
+|
+-
+
+Guess: h
+Wrong Guess❌
+👀 Current Guesses: _ _ _ _
+😿 Hangman Status:
+|    /\
+|
+-
+
+Guess: r
+Wrong Guess❌
+👀 Current Guesses: _ _ _ _
+😿 Hangman Status:
+|   -|-
+|    /\
+|
+-
+
+Guess: d
+Success revealed one letter 'd'✅
+👀 Current Guesses: _ _ d _
+😿 Hangman Status:
+|   -|-
+|    /\
+|
+-
+
+Guess: j
+Success revealed one letter 'j'✅
+👀 Current Guesses: j _ d _
+😿 Hangman Status:
+|   -|-
+|    /\
+|
+-
+
+Guess: x
+Wrong Guess❌
+👀 Current Guesses: j _ d _
+😿 Hangman Status:
+|    O
+|   -|-
+|    /\
+|
+-
+
+Guess:
+```
+
+## Gameover
+
+If the user wins:
+```
+Guess: i
+Success revealed one letter 'i'✅
+👀 Current Guesses: j e d i
+😿 Hangman Status:
+|    O
+|   -|-
+|    /\
+|
+-
+You saved the hanging man🙏
+
+Do you want to play again? 'yes' or 'no'
+```
+
+if the user lose:
+```
+Guess: g
+Wrong Guess❌
+👀 Current Guesses: g _ _ g _ _
+😿 Hangman Status:
+ ____
+|    |
+|    O
+|   -|-
+|    /\
+|
+-
+HANGED THE MAN💀
+
+Do you want to play again? 'yes' or 'no'
+```
+
+## Game Loop
+
+Users will be asked if they want to play again, they can enter yes/no to restart/end the game. If they enter something else, they will be asked to re-enter
+
+```
+Do you want to play again? 'yes' or 'no'
+t
+I am not sure what you mean, please only enter 'yes' or 'no'
+
+Do you want to play again? 'yes' or 'no'
+3
+I am not sure what you mean, please only enter 'yes' or 'no'
+
+Do you want to play again? 'yes' or 'no'
+gsdfg
+I am not sure what you mean, please only enter 'yes' or 'no'
+
+Do you want to play again? 'yes' or 'no'
+```
+
+Game Restart:
+```
+Do you want to play again? 'yes' or 'no'
+y
+~~~~~~~~~~~~~~Hangman Game~~~~~~~~~~~~~~
+Guess the word or the man will be HANGED
+You can have up to 7 wrong guesses
+
+Hint: This word has 7 letters  _ _ _ _ _ _ _
+
+Guess:
+```
+
+EndGame:
+```
+Do you want to play again? 'yes' or 'no'
+n
+Thank you for playing
 ```
