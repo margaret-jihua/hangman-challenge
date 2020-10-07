@@ -137,7 +137,7 @@ You saved the hanging man🙏
 Do you want to play again? 'yes' or 'no'
 ```
 
-if the user lose:
+if the user loses:
 ```
 Guess: g
 Wrong Guess❌
